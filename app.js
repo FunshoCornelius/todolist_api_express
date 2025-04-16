@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(errorMiddleware);
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -20,14 +21,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
-
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tasks", taskRouter);
 app.use("/api/v1/auth", authRouter);
-
-app.use(errorMiddleware);
 
 export default app;
