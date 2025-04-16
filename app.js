@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import connectToDatabase from "./database/mongodb.js";
 
 const app = express();
 
@@ -24,5 +25,16 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tasks", taskRouter);
 app.use("/api/v1/auth", authRouter);
+
+app.listen(process.env.PORT || 5000, async () => {
+  try {
+    await connectToDatabase();
+    console.log("✅ Connected to MongoDB");
+    console.log(`Server is running on port ${process.env.PORT || 5000}`);
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error);
+    process.exit(1);
+  }
+});
 
 export default app;
