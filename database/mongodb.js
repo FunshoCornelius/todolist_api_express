@@ -5,12 +5,20 @@ if (!DB_URI) {
   throw new Error("DATABASE_URL is not defined");
 }
 
+let isConnected = false;
+
 export default async function connectToDatabase() {
+  if (isConnected) return;
+
   try {
-    await mongoose.connect(DB_URI);
-    console.log("Connected to MongoDB database");
+    await mongoose.connect(DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    isConnected = true;
+    console.log("✅ Connected to MongoDB");
   } catch (error) {
-    console.error("Error connecting to the database", error);
-    process.exit(1);
+    console.error("❌ MongoDB connection error:", error);
+    throw new Error("MongoDB connection failed");
   }
 }

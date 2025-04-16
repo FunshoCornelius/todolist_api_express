@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tasks", taskRouter);
 app.use("/api/v1/auth", authRouter);
