@@ -22,16 +22,16 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/tasks", taskRouter);
 app.use("/api/v1/auth", authRouter);
 
-app.get("/", function (req, res) {
-  res.send({
-    data: {
-      id: 1,
-      name: "John Jamiu ",
-      email: "6o2Vb@example.com",
-    },
-    status: "success",
-  });
-});
+// app.get("/", function (req, res) {
+//   res.send({
+//     success: true,
+//     data: {
+//       id: 1,
+//       name: "John Jamiu ",
+//       email: "6o2Vb@example.com",
+//     },
+//   });
+// });
 
 app.listen(PORT, async function () {
   console.log(`Todo app server is running on https://localhost:${PORT}`);
