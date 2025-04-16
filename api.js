@@ -6,12 +6,17 @@ import app from "./app.js";
 let isDbConnected = false;
 
 const handler = async (req, res) => {
-  if (!isDbConnected) {
-    await connectToDatabase();
-    isDbConnected = true;
+  try {
+    if (!isDbConnected) {
+      await connectToDatabase();
+      isDbConnected = true;
+    }
+    const serverlessHandler = serverless(app);
+    return serverlessHandler(req, res);
+  } catch (error) {
+    console.error("Error connecting to database:", error);
+    res.status(500).json({ error: "Couldn't start the server" });
   }
-  const serverlessHandler = serverless(app);
-  return serverlessHandler(req, res);
 };
 
 export default handler;
